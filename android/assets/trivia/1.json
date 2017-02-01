@@ -1,0 +1,6 @@
+{
+  question: "¿Cuántas veces nos hemos de cepillar los dientes al día?",
+  correct: "Dos o tres veces al día",
+  wrong1: "Nunca",
+  wrong2: "Ochenta"
+}

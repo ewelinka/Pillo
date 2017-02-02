@@ -5,8 +5,8 @@ package uy.aguita.pillo.util;
  */
 
 public class Constants {
-    public static final float VIEWPORT_WIDTH = 1024;
-    public static final float VIEWPORT_HEIGHT = 600;
+    public static final int VIEWPORT_WIDTH = 1024;
+    public static final int VIEWPORT_HEIGHT = 600;
 
     public static final String TEXTURE_ATLAS_PACK = "images/pack.atlas";
 

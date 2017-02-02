@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.Json;
 import uy.aguita.pillo.game.Assets;
 import uy.aguita.pillo.game.objects.FeteCharacter;
 import uy.aguita.pillo.util.AudioManager;
+import uy.aguita.pillo.util.Constants;
 import uy.aguita.pillo.util.TriviaQuestion;
 
 import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
@@ -27,26 +28,29 @@ public class TriviaScreen extends AbstractGameScreen {
     public static final String TAG = TriviaScreen.class.getName();
     private int triviaTypeNr; //0, 1 or 2
     private int triviaNr; // 1,2,3,..
-    //private String nowQuestion, correct1,wrong,wrong2;
-    private TriviaQuestion currentQuestion;
-    private TextButton question,correct,wrong1,wrong2;
-    private ImageButton correctBtn,wrong1btn,wrong2btn;
-    private int buttonsX, answersX, questionY, answerSpaceY, answerWidth, answerHeight;
+
+    private ImageButton btnA,btnB,btnC;
+    private int buttonsX, answersX, questionY, answerSpaceY, answerWidth, answerHeight,questionWidth,questionHeight;
     private boolean shouldRemoveFirst;
-    private Image congrats;
-    private FeteCharacter feteCharacter;
+    private Image congrats, question1, question2,question3, answerA, answerB, answerC;
+    private FeteCharacter arm,mouth;
 
 
     public TriviaScreen(DirectedGame game, int triviaTypeNr) {
         super(game);
         this.triviaTypeNr = triviaTypeNr;
         triviaNr = 1; // start with first question
-        buttonsX= -340;
-        answersX = buttonsX +96;
-        questionY = 140;
-        answerSpaceY = 110;
-        answerWidth = 500;
-        answerHeight = 86;
+        buttonsX= -Constants.VIEWPORT_WIDTH/2 + 191;
+        answersX = buttonsX +103;
+        questionY = 60;
+
+        answerSpaceY = 15;
+
+        answerWidth = 493;
+        answerHeight = 90;
+        questionWidth = 500;
+        questionHeight = 90;
+
         shouldRemoveFirst = false;
     }
 
@@ -54,9 +58,13 @@ public class TriviaScreen extends AbstractGameScreen {
     @Override
     public void show() {
         initStageAndCamera();
+        addBackgroundImage();
         addBackButton();
+
+        addMovingArm();
+        addPillo();
+        addMouth();
         addQuestionAndAnswers();
-        addFeteCharacter();
         addCongrats();
 
     }
@@ -74,69 +82,77 @@ public class TriviaScreen extends AbstractGameScreen {
     private Vector2 getPosition(int randomPos){
         switch (randomPos){
             case 0:
-                return new Vector2(answersX,questionY- answerSpaceY);
+                return new Vector2(answersX,questionY- answerSpaceY - questionHeight );
             case 1:
-                return new Vector2(answersX,questionY- answerSpaceY *2 );
+                return new Vector2(answersX,questionY- answerSpaceY *2 - questionHeight*2 );
             case 2:
-                return new Vector2(answersX,questionY- answerSpaceY *3 );
+                return new Vector2(answersX,questionY- answerSpaceY *3 - questionHeight*3);
             default:
                 return new Vector2(0,0);
         }
     }
 
 
-    public TriviaQuestion getTriviaQuestion(){
-        Json json = new Json();
-        return json.fromJson(TriviaQuestion.class, Gdx.files.internal("trivia/"+(triviaNr+triviaTypeNr*3)+".json"));
-    }
-
     public void addQuestionAndAnswers(){
-        currentQuestion = getTriviaQuestion();
+        Image backgroundQuestion = new Image(Assets.instance.trivia.questionBack);
+        backgroundQuestion.setSize(questionWidth,questionHeight);
+        backgroundQuestion.setPosition(answersX-3, questionY);
+        stage.addActor(backgroundQuestion);
 
         if(shouldRemoveFirst){
             removeAllQuestions();
         }
-        question = new TextButton(currentQuestion.question, Assets.instance.buttons.triviaQuestion);
-        question.setPosition(-question.getWidth()/2,questionY);
-        question.setDisabled(true);
 
-        int randomPos = MathUtils.random(2);// 0, 1 or 2
-        correct = new TextButton(currentQuestion.correct, Assets.instance.buttons.triviaAnswer);
-        correct.setPosition(getPosition(randomPos).x,getPosition(randomPos).y); //when x fixed and stars from left to right
-        correct.setSize(answerWidth,answerHeight);
-        //correct.setPosition(answerCenterX-correct.getWidth()/2,getPosition(randomPos).y+answerYadjustment); // centered answer
-       // correct.getLabel().setAlignment(Align.left);
-        correctBtn = new ImageButton(Assets.instance.buttons.answerBtnStyle);
-        correctBtn.setPosition(buttonsX,getPosition(randomPos).y);
-        addCorrectAction(correct);
-        addCorrectAction(correctBtn);
+        question1 = new Image(Assets.instance.trivia.q1_1); // this will change after good answer
+        question1.setPosition(answersX-3,questionY);
+        stage.addActor(question1);
 
-        randomPos = (randomPos+1)%3;
-        wrong1 = new TextButton(currentQuestion.wrong1, Assets.instance.buttons.triviaAnswer); //when x fixed and stars from left to right
-        wrong1.setPosition(getPosition(randomPos).x,getPosition(randomPos).y);
-        wrong1.setSize(answerWidth,answerHeight);
-        wrong1btn = new ImageButton(Assets.instance.buttons.answerBtnStyle);
-        wrong1btn.setPosition(buttonsX, getPosition(randomPos).y);
-        addWrongAction(wrong1);
-        addWrongAction(wrong1btn);
+        // ANSWER A
+        Image backgroundO1 = new Image(Assets.instance.trivia.optionBack);
+        backgroundO1.setSize(answerWidth,answerHeight);
+        backgroundO1.setPosition(answersX, getPosition(0).y);
+        stage.addActor(backgroundO1);
+        // BTN
+        btnA = new ImageButton(Assets.instance.buttons.answerBtn1Style);
+        btnA.setPosition(buttonsX,getPosition(0).y);
+        stage.addActor(btnA);
+        addCorrectAction(btnA);
+        // TXT
+        answerA = new Image(Assets.instance.trivia.r1_1); // this will change after good answer
+        answerA.setPosition(answersX,getPosition(0).y);
+        stage.addActor(answerA);
 
-        randomPos = (randomPos+1)%3;
-        wrong2 = new TextButton(currentQuestion.wrong2, Assets.instance.buttons.triviaAnswer); //when x fixed and stars from left to right
-        wrong2.setPosition(getPosition(randomPos).x,getPosition(randomPos).y);
-        wrong2.setSize(answerWidth,answerHeight);
-        wrong2btn = new ImageButton(Assets.instance.buttons.answerBtnStyle);
-        wrong2btn.setPosition(buttonsX,getPosition(randomPos).y);
-        addWrongAction(wrong2);
-        addWrongAction(wrong2btn);
 
-        stage.addActor(question);
-        stage.addActor(correct);
-        stage.addActor(wrong1);
-        stage.addActor(wrong2);
+        // ANSWER B
+        Image backgroundO2 = new Image(Assets.instance.trivia.optionBack);
+        backgroundO2.setSize(answerWidth,answerHeight);
+        backgroundO2.setPosition(answersX, getPosition(1).y);
+        stage.addActor(backgroundO2);
+        // BTN
+        btnB = new ImageButton(Assets.instance.buttons.answerBtn2Style);
+        btnB.setPosition(buttonsX,getPosition(1).y);
+        stage.addActor(btnB);
+        // TXT
+        answerB = new Image(Assets.instance.trivia.r1_2); // this will change after good answer
+        answerB.setPosition(answersX,getPosition(1).y);
+        stage.addActor(answerB);
 
-        stage.addActor(correctBtn);
-        stage.addActor(wrong1btn);
-        stage.addActor(wrong2btn);
+
+        // ANSWER C
+        Image backgroundO3 = new Image(Assets.instance.trivia.optionBack);
+        backgroundO3.setSize(493,84);
+        backgroundO3.setPosition(answersX, getPosition(2).y);
+        stage.addActor(backgroundO3);
+        // BTN
+        btnC = new ImageButton(Assets.instance.buttons.answerBtn3Style);
+        btnC.setPosition(buttonsX,getPosition(2).y);
+        stage.addActor(btnC);
+        // TXT
+        answerC = new Image(Assets.instance.trivia.r1_3); // this will change after good answer
+        answerC.setPosition(answersX,getPosition(2).y);
+        stage.addActor(answerC);
+
+
 
 
         if(shouldRemoveFirst)
@@ -144,12 +160,77 @@ public class TriviaScreen extends AbstractGameScreen {
 
     }
 
-    private void addFeteCharacter(){
-        feteCharacter = new FeteCharacter();
-        feteCharacter.setPosition(270,-290);
-        feteCharacter.setSize(232,355);
 
-        stage.addActor(feteCharacter);
+    private void addBackgroundImage(){
+        Image back = new Image(Assets.instance.trivia.background);
+        back.setSize(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
+        back.setPosition(-Constants.VIEWPORT_WIDTH/2,-Constants.VIEWPORT_HEIGHT/2);
+
+        stage.addActor(back);
+    }
+
+    private void addPillo(){
+        final Image pillo = new Image(Assets.instance.trivia.pillo);
+        pillo.setSize(168,269);
+        pillo.setPosition(343,-173);
+        pillo.setTouchable(Touchable.enabled);
+        // to move around
+        pillo.addListener(new ActorGestureListener() {
+
+            @Override
+            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+                //TODO we should check if the piece is in stage limits or the controller should do this?
+                pillo.setPosition(pillo.getX()+deltaX,pillo.getY()+deltaY);
+                Gdx.app.log(TAG," pillo x "+pillo.getX() +" y "+pillo.getY());
+            }
+
+
+        });
+
+        stage.addActor(pillo);
+    }
+
+    private void addMovingArm(){
+        arm = new FeteCharacter(Assets.instance.trivia.arm);
+        arm.setPosition(244,-162);
+        arm.setSize(202,273);
+
+        arm.setTouchable(Touchable.enabled);
+        // to move around
+        arm.addListener(new ActorGestureListener() {
+
+            @Override
+            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+                //TODO we should check if the piece is in stage limits or the controller should do this?
+                arm.setPosition(arm.getX()+deltaX,arm.getY()+deltaY);
+                Gdx.app.log(TAG," arm x "+arm.getX() +" y "+arm.getY());
+            }
+
+
+        });
+        stage.addActor(arm);
+    }
+
+
+    private void addMouth(){
+        mouth = new FeteCharacter(Assets.instance.trivia.mouth);
+        mouth.setPosition(408,-32);
+        mouth.setSize(44,47);
+
+        mouth.setTouchable(Touchable.enabled);
+        // to move around
+        mouth.addListener(new ActorGestureListener() {
+
+            @Override
+            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+                //TODO we should check if the piece is in stage limits or the controller should do this?
+                mouth.setPosition(mouth.getX()+deltaX,mouth.getY()+deltaY);
+                Gdx.app.log(TAG," arm x "+mouth.getX() +" y "+mouth.getY());
+            }
+
+
+        });
+        stage.addActor(mouth);
     }
 
     private void addCongrats(){
@@ -174,7 +255,8 @@ public class TriviaScreen extends AbstractGameScreen {
                 AudioManager.instance.play(Assets.instance.sounds.good);
                 triviaNr+=1;
                 shouldRemoveFirst = true;
-                feteCharacter.doFete();
+                arm.doFete();
+                mouth.doFete();
                 animateCongrats();
 
             }
@@ -232,13 +314,7 @@ public class TriviaScreen extends AbstractGameScreen {
     }
 
     private void removeAllQuestions(){
-        question.remove();
-        correct.remove();
-        correctBtn.remove();
-        wrong1.remove();
-        wrong1btn.remove();
-        wrong2.remove();
-        wrong2btn.remove();
+
 
 
     }

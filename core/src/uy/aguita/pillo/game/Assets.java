@@ -138,8 +138,7 @@ public class Assets implements Disposable, AssetErrorListener {
         // Trivia screen
         public final TextButton.TextButtonStyle triviaQuestion;
         public final TextButton.TextButtonStyle triviaAnswer;
-        public final TextureAtlas.AtlasRegion answerBtn;
-        public final ImageButton.ImageButtonStyle answerBtnStyle;
+        public final ImageButton.ImageButtonStyle answerBtn1Style,answerBtn2Style,answerBtn3Style;
         public final ImageButton.ImageButtonStyle back;
 
         // Match screen
@@ -179,16 +178,24 @@ public class Assets implements Disposable, AssetErrorListener {
             triviaAnswer.overFontColor = Color.GREEN;
             triviaAnswer.up = new TextureRegionDrawable(atlas.findRegion("btn"));
 
-            answerBtn = atlas.findRegion("btn"); //-->BTN
-            answerBtnStyle= new ImageButton.ImageButtonStyle();
-            answerBtnStyle.up = new TextureRegionDrawable(answerBtn);
-            answerBtnStyle.down = new TextureRegionDrawable(answerBtn);
-            answerBtnStyle.over = new TextureRegionDrawable(answerBtn);
+            //-->BTN
+            answerBtn1Style= new ImageButton.ImageButtonStyle();
+            answerBtn1Style.up = new TextureRegionDrawable(atlas.findRegion("01a"));
+            answerBtn1Style.down = new TextureRegionDrawable(atlas.findRegion("01b"));
+            answerBtn1Style.over = new TextureRegionDrawable(atlas.findRegion("01b"));
+            answerBtn2Style= new ImageButton.ImageButtonStyle();
+            answerBtn2Style.up = new TextureRegionDrawable(atlas.findRegion("02a"));
+            answerBtn2Style.down = new TextureRegionDrawable(atlas.findRegion("02b"));
+            answerBtn2Style.over = new TextureRegionDrawable(atlas.findRegion("02b"));
+            answerBtn3Style= new ImageButton.ImageButtonStyle();
+            answerBtn3Style.up = new TextureRegionDrawable(atlas.findRegion("03a"));
+            answerBtn3Style.down = new TextureRegionDrawable(atlas.findRegion("03b"));
+            answerBtn3Style.over = new TextureRegionDrawable(atlas.findRegion("03b"));
 
             // ----------- Match screen
             matchText = new TextButton.TextButtonStyle();
             matchText.font = fonts.trivia39;
-            matchText.up = new TextureRegionDrawable(answerBtn);
+            matchText.up = new TextureRegionDrawable(atlas.findRegion("02b"));
 
             match1= new ImageButton.ImageButtonStyle();
             match1.up = new TextureRegionDrawable(atlas.findRegion("btn-trivia1")); //Set image for not pressed button
@@ -244,12 +251,76 @@ public class Assets implements Disposable, AssetErrorListener {
     }
 
     public class AssetTrivia{
-        public final Animation fete;
+        public final Animation arm;
+        public final Animation mouth;
+        public final Animation column1, column2;
+        public final TextureAtlas.AtlasRegion eyesClosed;
+        public final TextureAtlas.AtlasRegion pillo;
+        public final TextureAtlas.AtlasRegion stars,logo, background;
+        public final TextureAtlas.AtlasRegion q1_1,q1_2,q1_3, q2_1,q2_2,q2_3,q3_1,q3_2;
+        public final TextureAtlas.AtlasRegion r1_1,r1_2,r1_3,r1_4,r1_5,r1_6,r1_7,r1_8, r1_9;
+        public final TextureAtlas.AtlasRegion r2_1,r2_2,r2_3,r2_4,r2_5,r2_6,r2_7,r2_8, r2_9;
+        public final TextureAtlas.AtlasRegion r3_1,r3_2,r3_3,r3_4,r3_5,r3_6;
+        public final TextureAtlas.AtlasRegion optionBack,questionBack;
+
 
         public  AssetTrivia(TextureAtlas atlas) {
+            pillo = atlas.findRegion("pilloTrivia");
+            eyesClosed = atlas.findRegion("ojos_pillo02");
+            stars = atlas.findRegion("estrellas");
+            logo = atlas.findRegion("triviaLogo");
+            background = atlas.findRegion("fondoTrivia");
+
             Array<TextureAtlas.AtlasRegion> regions = null;
-            regions = atlas.findRegions("muela_bien"); //change!
-            fete = new Animation(0.3f , regions);
+            regions = atlas.findRegions("brazo_pillo");
+            arm = new Animation(0.15f , regions);
+            regions = atlas.findRegions("boca_pillo");
+            mouth = new Animation(0.3f , regions);
+            regions = atlas.findRegions("columna1");
+            column1 = new Animation(0.3f , regions);
+            regions = atlas.findRegions("columna2");
+            column2 = new Animation(0.3f , regions);
+
+            q1_1  = atlas.findRegion("nivel1_pregunta1");
+            q1_2  = atlas.findRegion("nivel1_pregunta2");
+            q1_3  = atlas.findRegion("nivel1_pregunta3");
+            q2_1  = atlas.findRegion("nivel2_pregunta1");
+            q2_2  = atlas.findRegion("nivel2_pregunta2");
+            q2_3  = atlas.findRegion("nivel2_pregunta3");
+            q3_1  = atlas.findRegion("nivel3_pregunta1");
+            q3_2  = atlas.findRegion("nivel3_pregunta2");
+
+            r1_1  = atlas.findRegion("nivel1_respuesta1");
+            r1_2  = atlas.findRegion("nivel1_respuesta2");
+            r1_3  = atlas.findRegion("nivel1_respuesta3");
+            r1_4  = atlas.findRegion("nivel1_respuesta4");
+            r1_5  = atlas.findRegion("nivel1_respuesta5");
+            r1_6  = atlas.findRegion("nivel1_respuesta6");
+            r1_7  = atlas.findRegion("nivel1_respuesta7");
+            r1_8  = atlas.findRegion("nivel1_respuesta8");
+            r1_9  = atlas.findRegion("nivel1_respuesta9");
+
+            r2_1  = atlas.findRegion("nivel2_respuesta1");
+            r2_2  = atlas.findRegion("nivel2_respuesta2");
+            r2_3  = atlas.findRegion("nivel2_respuesta3");
+            r2_4  = atlas.findRegion("nivel2_respuesta4");
+            r2_5  = atlas.findRegion("nivel2_respuesta5");
+            r2_6  = atlas.findRegion("nivel2_respuesta6");
+            r2_7  = atlas.findRegion("nivel2_respuesta7");
+            r2_8  = atlas.findRegion("nivel2_respuesta8");
+            r2_9  = atlas.findRegion("nivel2_respuesta9");
+
+            r3_1  = atlas.findRegion("nivel3_respuesta1");
+            r3_2  = atlas.findRegion("nivel3_respuesta2");
+            r3_3  = atlas.findRegion("nivel3_respuesta3");
+            r3_4  = atlas.findRegion("nivel3_respuesta4");
+            r3_5  = atlas.findRegion("nivel3_respuesta5");
+            r3_6  = atlas.findRegion("nivel3_respuesta6");
+
+            optionBack = atlas.findRegion("opcion-fondo");
+            questionBack = atlas.findRegion("pregunta-fondo");
+
+
         }
     }
 }

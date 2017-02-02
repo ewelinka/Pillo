@@ -4,178 +4,700 @@ size: 1024,1024
 format: RGBA8888
 filter: Nearest,Nearest
 repeat: none
-bacteria
+boca_pillo
   rotate: false
-  xy: 905, 830
-  size: 90, 90
-  orig: 90, 90
+  xy: 942, 110
+  size: 44, 47
+  orig: 44, 47
   offset: 0, 0
   index: 1
-bacteria
+boca_pillo
   rotate: false
-  xy: 905, 738
-  size: 90, 90
-  orig: 90, 90
+  xy: 942, 110
+  size: 44, 47
+  orig: 44, 47
+  offset: 0, 0
+  index: 8
+boca_pillo
+  rotate: false
+  xy: 967, 61
+  size: 44, 47
+  orig: 44, 47
   offset: 0, 0
   index: 2
-bakteria
+boca_pillo
   rotate: false
-  xy: 905, 646
-  size: 90, 90
-  orig: 90, 90
+  xy: 967, 61
+  size: 44, 47
+  orig: 44, 47
   offset: 0, 0
-  index: -1
-btn
+  index: 6
+boca_pillo
   rotate: false
-  xy: 905, 558
-  size: 86, 86
-  orig: 86, 86
+  xy: 967, 61
+  size: 44, 47
+  orig: 44, 47
   offset: 0, 0
-  index: -1
-btn-trivia1
+  index: 4
+boca_pillo
   rotate: false
-  xy: 2, 326
-  size: 150, 150
-  orig: 150, 150
+  xy: 967, 12
+  size: 44, 47
+  orig: 44, 47
   offset: 0, 0
-  index: -1
-contador
+  index: 3
+boca_pillo
   rotate: false
-  xy: 772, 922
-  size: 238, 91
-  orig: 238, 91
+  xy: 967, 12
+  size: 44, 47
+  orig: 44, 47
   offset: 0, 0
-  index: -1
+  index: 5
+boca_pillo
+  rotate: false
+  xy: 967, 12
+  size: 44, 47
+  orig: 44, 47
+  offset: 0, 0
+  index: 7
+columna1
+  rotate: false
+  xy: 888, 188
+  size: 109, 386
+  orig: 109, 386
+  offset: 0, 0
+  index: 1
+columna2
+  rotate: false
+  xy: 772, 576
+  size: 114, 431
+  orig: 114, 431
+  offset: 0, 0
+  index: 1
+columna2
+  rotate: false
+  xy: 772, 143
+  size: 114, 431
+  orig: 114, 431
+  offset: 0, 0
+  index: 2
+columna2
+  rotate: false
+  xy: 888, 576
+  size: 114, 431
+  orig: 114, 431
+  offset: 0, 0
+  index: 3
 cruz
   rotate: false
-  xy: 553, 447
+  xy: 988, 157
   size: 28, 29
   orig: 28, 29
   offset: 0, 0
   index: -1
+estrellas
+  rotate: false
+  xy: 2, 2
+  size: 648, 101
+  orig: 648, 101
+  offset: 0, 0
+  index: -1
 fondoMuela
   rotate: false
-  xy: 2, 563
+  xy: 2, 557
+  size: 768, 450
+  orig: 768, 450
+  offset: 0, 0
+  index: -1
+fondoTrivia
+  rotate: false
+  xy: 2, 105
   size: 768, 450
   orig: 768, 450
   offset: 0, 0
   index: -1
 inicio01
   rotate: false
-  xy: 2, 31
+  xy: 772, 114
   size: 90, 27
   orig: 90, 27
   offset: 0, 0
   index: -1
 inicio02
   rotate: false
-  xy: 2, 2
+  xy: 888, 159
   size: 90, 27
   orig: 90, 27
   offset: 0, 0
   index: -1
+ojos_pillo02
+  rotate: false
+  xy: 888, 122
+  size: 52, 35
+  orig: 52, 35
+  offset: 0, 0
+  index: -1
+triviaLogo
+  rotate: false
+  xy: 652, 4
+  size: 313, 99
+  orig: 313, 99
+  offset: 0, 0
+  index: -1
+
+pack2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bacteria
+  rotate: false
+  xy: 855, 89
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: 1
+brazo_pillo
+  rotate: false
+  xy: 615, 731
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 1
+brazo_pillo
+  rotate: false
+  xy: 615, 731
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 13
+brazo_pillo
+  rotate: false
+  xy: 615, 456
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 2
+brazo_pillo
+  rotate: false
+  xy: 615, 456
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 12
+brazo_pillo
+  rotate: false
+  xy: 819, 731
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 3
+brazo_pillo
+  rotate: false
+  xy: 819, 731
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 11
+brazo_pillo
+  rotate: false
+  xy: 615, 181
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 4
+brazo_pillo
+  rotate: false
+  xy: 615, 181
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 10
+brazo_pillo
+  rotate: false
+  xy: 819, 456
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 5
+brazo_pillo
+  rotate: false
+  xy: 819, 456
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 7
+brazo_pillo
+  rotate: false
+  xy: 819, 456
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 9
+brazo_pillo
+  rotate: false
+  xy: 819, 181
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 6
+brazo_pillo
+  rotate: false
+  xy: 819, 181
+  size: 202, 273
+  orig: 202, 273
+  offset: 0, 0
+  index: 8
+columna1
+  rotate: false
+  xy: 504, 533
+  size: 109, 386
+  orig: 109, 386
+  offset: 0, 0
+  index: 2
+columna1
+  rotate: false
+  xy: 504, 145
+  size: 109, 386
+  orig: 109, 386
+  offset: 0, 0
+  index: 3
+contador
+  rotate: false
+  xy: 615, 88
+  size: 238, 91
+  orig: 238, 91
+  offset: 0, 0
+  index: -1
+nivel1_pregunta1
+  rotate: false
+  xy: 2, 829
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel1_pregunta2
+  rotate: false
+  xy: 2, 737
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel1_pregunta3
+  rotate: false
+  xy: 2, 645
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel1_respuesta1
+  rotate: false
+  xy: 2, 7
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta2
+  rotate: false
+  xy: 497, 2
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_pregunta1
+  rotate: false
+  xy: 2, 553
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel2_pregunta2
+  rotate: false
+  xy: 2, 461
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel2_pregunta3
+  rotate: false
+  xy: 2, 369
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel3_pregunta1
+  rotate: false
+  xy: 2, 277
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+nivel3_pregunta2
+  rotate: false
+  xy: 2, 185
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+pie_pantalla
+  rotate: false
+  xy: 2, 921
+  size: 597, 83
+  orig: 597, 83
+  offset: 0, 0
+  index: -1
+pregunta-fondo
+  rotate: false
+  xy: 2, 93
+  size: 500, 90
+  orig: 500, 90
+  offset: 0, 0
+  index: -1
+
+pack3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+01a
+  rotate: false
+  xy: 763, 518
+  size: 89, 89
+  orig: 89, 89
+  offset: 0, 0
+  index: -1
+01b
+  rotate: false
+  xy: 854, 518
+  size: 89, 89
+  orig: 89, 89
+  offset: 0, 0
+  index: -1
+02a
+  rotate: false
+  xy: 933, 916
+  size: 89, 90
+  orig: 89, 90
+  offset: 0, 0
+  index: -1
+02b
+  rotate: false
+  xy: 933, 824
+  size: 89, 90
+  orig: 89, 90
+  offset: 0, 0
+  index: -1
+bacteria
+  rotate: false
+  xy: 896, 650
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: 2
+btn-trivia1
+  rotate: false
+  xy: 2, 770
+  size: 150, 150
+  orig: 150, 150
+  offset: 0, 0
+  index: -1
 muela
   rotate: false
-  xy: 772, 789
+  xy: 2, 637
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: -1
 muela_bien
   rotate: false
-  xy: 2, 193
+  xy: 135, 637
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 1
 muela_bien
   rotate: false
-  xy: 154, 345
+  xy: 154, 789
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 2
 muela_bien
   rotate: false
-  xy: 154, 345
+  xy: 154, 789
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 6
 muela_bien
   rotate: false
-  xy: 772, 656
+  xy: 287, 789
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 3
 muela_bien
   rotate: false
-  xy: 772, 656
+  xy: 287, 789
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 5
 muela_bien
   rotate: false
-  xy: 2, 60
+  xy: 667, 875
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 4
 muela_bien
   rotate: false
-  xy: 287, 345
+  xy: 667, 742
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 7
 muela_bien
   rotate: false
-  xy: 287, 345
+  xy: 667, 742
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 9
 muela_bien
   rotate: false
-  xy: 420, 345
+  xy: 497, 518
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 8
 muela_mal
   rotate: false
-  xy: 772, 523
+  xy: 763, 609
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 1
 muela_mal
   rotate: false
-  xy: 601, 430
+  xy: 630, 518
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 2
 muela_mal
   rotate: false
-  xy: 734, 390
+  xy: 800, 875
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 3
 muela_mal
   rotate: false
-  xy: 867, 390
+  xy: 800, 742
   size: 131, 131
   orig: 131, 131
   offset: 0, 0
   index: 4
-pie_pantalla
+nivel1_respuesta3
   rotate: false
-  xy: 2, 478
-  size: 597, 83
-  orig: 597, 83
+  xy: 2, 922
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta4
+  rotate: false
+  xy: 2, 551
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta5
+  rotate: false
+  xy: 268, 651
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta6
+  rotate: false
+  xy: 2, 465
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta9
+  rotate: false
+  xy: 2, 465
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta7
+  rotate: false
+  xy: 497, 432
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel1_respuesta8
+  rotate: false
+  xy: 2, 379
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta1
+  rotate: false
+  xy: 497, 346
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta2
+  rotate: false
+  xy: 2, 293
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta3
+  rotate: false
+  xy: 497, 260
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta4
+  rotate: false
+  xy: 2, 207
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta5
+  rotate: false
+  xy: 497, 174
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta6
+  rotate: false
+  xy: 2, 121
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta7
+  rotate: false
+  xy: 497, 88
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta8
+  rotate: false
+  xy: 2, 35
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel2_respuesta9
+  rotate: false
+  xy: 497, 2
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+pilloTrivia
+  rotate: false
+  xy: 497, 737
+  size: 168, 269
+  orig: 168, 269
+  offset: 0, 0
+  index: -1
+
+pack4.png
+size: 1024,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+03a
+  rotate: false
+  xy: 94, 3
+  size: 89, 89
+  orig: 89, 89
+  offset: 0, 0
+  index: -1
+03b
+  rotate: false
+  xy: 185, 3
+  size: 89, 89
+  orig: 89, 89
+  offset: 0, 0
+  index: -1
+bakteria
+  rotate: false
+  xy: 2, 2
+  size: 90, 90
+  orig: 90, 90
+  offset: 0, 0
+  index: -1
+btn
+  rotate: false
+  xy: 276, 6
+  size: 86, 86
+  orig: 86, 86
+  offset: 0, 0
+  index: -1
+nivel3_respuesta1
+  rotate: false
+  xy: 2, 352
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel3_respuesta2
+  rotate: false
+  xy: 2, 266
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel3_respuesta3
+  rotate: false
+  xy: 497, 352
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel3_respuesta4
+  rotate: false
+  xy: 2, 180
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel3_respuesta5
+  rotate: false
+  xy: 497, 266
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+nivel3_respuesta6
+  rotate: false
+  xy: 2, 94
+  size: 493, 84
+  orig: 493, 84
+  offset: 0, 0
+  index: -1
+opcion-fondo
+  rotate: false
+  xy: 497, 180
+  size: 493, 84
+  orig: 493, 84
   offset: 0, 0
   index: -1

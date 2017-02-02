@@ -15,8 +15,8 @@ public class FeteCharacter extends Actor {
     private TextureRegion regTex;
     private float stateTime;
 
-    public FeteCharacter(){
-        animation = Assets.instance.trivia.fete;
+    public FeteCharacter(Animation anim){
+        animation = anim;
         stateTime = animation.getAnimationDuration(); // we start in last frame so we wont animate
     }
 

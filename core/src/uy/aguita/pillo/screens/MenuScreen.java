@@ -109,13 +109,13 @@ public class MenuScreen extends AbstractGameScreen {
 
 
     private void onTrivia1Clicked () {
-        game.setScreen(new TriviaScreen(game,0), transition);
+        game.setScreen(new TriviaScreen(game,1), transition);
     }
     private void onTrivia2Clicked () {
-        game.setScreen(new TriviaScreen(game,0), transition);
+        game.setScreen(new TriviaScreen(game,2), transition);
     }
     private void onTrivia3Clicked () {
-        game.setScreen(new TriviaScreen(game,0), transition);
+        game.setScreen(new TriviaScreen(game,3), transition);
     }
     private void onToothClicked () {
         Gdx.app.log(TAG,"onToothClicked");

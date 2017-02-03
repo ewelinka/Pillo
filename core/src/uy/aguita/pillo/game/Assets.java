@@ -47,6 +47,9 @@ public class Assets implements Disposable, AssetErrorListener {
         // load sounds
         assetManager.load("sounds/pickup_coin.wav", Sound.class);
         assetManager.load("sounds/live_lost.wav", Sound.class);
+        assetManager.load("sounds/excelente.mp3", Sound.class);
+        assetManager.load("sounds/muy_bien.mp3", Sound.class);
+        assetManager.load("sounds/perfecto.mp3", Sound.class);
         assetManager.load("sounds/m.mp3", Music.class);
         // start loading assets and wait until finished
         assetManager.finishLoading();
@@ -112,10 +115,14 @@ public class Assets implements Disposable, AssetErrorListener {
     public class AssetSounds {
         public final Sound good;
         public final Sound bad;
+        public final Sound excelent,vGood,perfect;
 
         public AssetSounds(AssetManager am) {
             good = am.get("sounds/pickup_coin.wav", Sound.class);
             bad = am.get("sounds/live_lost.wav", Sound.class);
+            excelent = am.get("sounds/excelente.mp3", Sound.class);
+            vGood = am.get("sounds/muy_bien.mp3", Sound.class);
+            perfect= am.get("sounds/perfecto.mp3", Sound.class);
         }
     }
 
@@ -256,7 +263,7 @@ public class Assets implements Disposable, AssetErrorListener {
         public final Animation column1, column2;
         public final TextureAtlas.AtlasRegion eyesClosed;
         public final TextureAtlas.AtlasRegion pillo;
-        public final TextureAtlas.AtlasRegion stars,logo, background;
+        public final TextureAtlas.AtlasRegion stars,logo, background, congratulation;
         public final TextureAtlas.AtlasRegion q1_1,q1_2,q1_3, q2_1,q2_2,q2_3,q3_1,q3_2;
         public final TextureAtlas.AtlasRegion r1_1,r1_2,r1_3,r1_4,r1_5,r1_6,r1_7,r1_8, r1_9;
         public final TextureAtlas.AtlasRegion r2_1,r2_2,r2_3,r2_4,r2_5,r2_6,r2_7,r2_8, r2_9;
@@ -270,16 +277,17 @@ public class Assets implements Disposable, AssetErrorListener {
             stars = atlas.findRegion("estrellas");
             logo = atlas.findRegion("triviaLogo");
             background = atlas.findRegion("fondoTrivia");
+            congratulation = atlas.findRegion("cartel_felicitaciones");
 
             Array<TextureAtlas.AtlasRegion> regions = null;
             regions = atlas.findRegions("brazo_pillo");
-            arm = new Animation(0.15f , regions);
+            arm = new Animation(0.10f , regions);
             regions = atlas.findRegions("boca_pillo");
-            mouth = new Animation(0.3f , regions);
+            mouth = new Animation(0.15f , regions);
             regions = atlas.findRegions("columna1");
-            column1 = new Animation(0.3f , regions);
+            column1 = new Animation(0.3f , regions, Animation.PlayMode.LOOP_PINGPONG);
             regions = atlas.findRegions("columna2");
-            column2 = new Animation(0.3f , regions);
+            column2 = new Animation(0.3f , regions, Animation.PlayMode.LOOP);
 
             q1_1  = atlas.findRegion("nivel1_pregunta1");
             q1_2  = atlas.findRegion("nivel1_pregunta2");

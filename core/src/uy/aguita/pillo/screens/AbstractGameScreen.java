@@ -78,7 +78,7 @@ public abstract class AbstractGameScreen implements Screen {
         camera.position.set(0,0,0);
         camera.update();
         stage = new Stage(new FitViewport(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT,camera));
-        stage.setDebugAll(true);
+        //stage.setDebugAll(true);
     }
 
     protected void addBackButton(){

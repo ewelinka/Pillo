@@ -1,12 +1,15 @@
 package uy.aguita.pillo.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -14,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.utils.Json;
 import uy.aguita.pillo.game.Assets;
+import uy.aguita.pillo.game.objects.Column;
 import uy.aguita.pillo.game.objects.FeteCharacter;
 import uy.aguita.pillo.util.AudioManager;
 import uy.aguita.pillo.util.Constants;
@@ -32,13 +36,17 @@ public class TriviaScreen extends AbstractGameScreen {
     private ImageButton btnA,btnB,btnC;
     private int buttonsX, answersX, questionY, answerSpaceY, answerWidth, answerHeight,questionWidth,questionHeight;
     private boolean shouldRemoveFirst;
-    private Image congrats, question1, question2,question3, answerA, answerB, answerC;
+    private Image congrats, question, answerA, answerB, answerC;
     private FeteCharacter arm,mouth;
+    private Sound[] goodSounds;
+    private Column column1,column2;
+    private TextureRegion [] q1,q2,q3;
+    private float fadeVelocity;
 
 
     public TriviaScreen(DirectedGame game, int triviaTypeNr) {
         super(game);
-        this.triviaTypeNr = triviaTypeNr;
+        this.triviaTypeNr = triviaTypeNr; //1,2 or 3
         triviaNr = 1; // start with first question
         buttonsX= -Constants.VIEWPORT_WIDTH/2 + 191;
         answersX = buttonsX +103;
@@ -52,6 +60,12 @@ public class TriviaScreen extends AbstractGameScreen {
         questionHeight = 90;
 
         shouldRemoveFirst = false;
+        fadeVelocity =1.0f;
+
+        goodSounds = new Sound[]{Assets.instance.sounds.perfect,Assets.instance.sounds.vGood,Assets.instance.sounds.excelent};
+        q1 = new TextureRegion[]{Assets.instance.trivia.q1_1,Assets.instance.trivia.q1_2,Assets.instance.trivia.q1_3};
+        q2 = new TextureRegion[]{Assets.instance.trivia.q2_1,Assets.instance.trivia.q2_2,Assets.instance.trivia.q2_3};
+        q3 = new TextureRegion[]{Assets.instance.trivia.q3_1,Assets.instance.trivia.q3_2};
     }
 
 
@@ -60,10 +74,13 @@ public class TriviaScreen extends AbstractGameScreen {
         initStageAndCamera();
         addBackgroundImage();
         addBackButton();
+        addColumns();
 
         addMovingArm();
         addPillo();
         addMouth();
+        addABC();
+        addQuestionAndAnswersBacks();
         addQuestionAndAnswers();
         addCongrats();
 
@@ -93,49 +110,24 @@ public class TriviaScreen extends AbstractGameScreen {
     }
 
 
-    public void addQuestionAndAnswers(){
+    public void addQuestionAndAnswersBacks(){
+
         Image backgroundQuestion = new Image(Assets.instance.trivia.questionBack);
         backgroundQuestion.setSize(questionWidth,questionHeight);
         backgroundQuestion.setPosition(answersX-3, questionY);
         stage.addActor(backgroundQuestion);
-
-        if(shouldRemoveFirst){
-            removeAllQuestions();
-        }
-
-        question1 = new Image(Assets.instance.trivia.q1_1); // this will change after good answer
-        question1.setPosition(answersX-3,questionY);
-        stage.addActor(question1);
 
         // ANSWER A
         Image backgroundO1 = new Image(Assets.instance.trivia.optionBack);
         backgroundO1.setSize(answerWidth,answerHeight);
         backgroundO1.setPosition(answersX, getPosition(0).y);
         stage.addActor(backgroundO1);
-        // BTN
-        btnA = new ImageButton(Assets.instance.buttons.answerBtn1Style);
-        btnA.setPosition(buttonsX,getPosition(0).y);
-        stage.addActor(btnA);
-        addCorrectAction(btnA);
-        // TXT
-        answerA = new Image(Assets.instance.trivia.r1_1); // this will change after good answer
-        answerA.setPosition(answersX,getPosition(0).y);
-        stage.addActor(answerA);
-
 
         // ANSWER B
         Image backgroundO2 = new Image(Assets.instance.trivia.optionBack);
         backgroundO2.setSize(answerWidth,answerHeight);
         backgroundO2.setPosition(answersX, getPosition(1).y);
         stage.addActor(backgroundO2);
-        // BTN
-        btnB = new ImageButton(Assets.instance.buttons.answerBtn2Style);
-        btnB.setPosition(buttonsX,getPosition(1).y);
-        stage.addActor(btnB);
-        // TXT
-        answerB = new Image(Assets.instance.trivia.r1_2); // this will change after good answer
-        answerB.setPosition(answersX,getPosition(1).y);
-        stage.addActor(answerB);
 
 
         // ANSWER C
@@ -143,22 +135,173 @@ public class TriviaScreen extends AbstractGameScreen {
         backgroundO3.setSize(493,84);
         backgroundO3.setPosition(answersX, getPosition(2).y);
         stage.addActor(backgroundO3);
-        // BTN
+
+    }
+
+    private void addABC(){
+        // BTN A
+        btnA = new ImageButton(Assets.instance.buttons.answerBtn1Style);
+        btnA.setPosition(buttonsX,getPosition(0).y);
+        stage.addActor(btnA);
+        // BTN B
+        btnB = new ImageButton(Assets.instance.buttons.answerBtn2Style);
+        btnB.setPosition(buttonsX,getPosition(1).y);
+        stage.addActor(btnB);
+        // BTN C
         btnC = new ImageButton(Assets.instance.buttons.answerBtn3Style);
         btnC.setPosition(buttonsX,getPosition(2).y);
         stage.addActor(btnC);
-        // TXT
-        answerC = new Image(Assets.instance.trivia.r1_3); // this will change after good answer
-        answerC.setPosition(answersX,getPosition(2).y);
-        stage.addActor(answerC);
+    }
 
-
-
+    private void addQuestionAndAnswers(){
+        loadQuestion();
+        loadAnswerA();
+        loadAnswerB();
+        loadAnswerC();
+        loadCorrectAndWrong();
 
         if(shouldRemoveFirst)
             congrats.toFront();
 
+
     }
+
+    private void loadCorrectAndWrong(){
+        addCorrectAction(btnB);
+        addWrongAction(btnA);
+        addWrongAction(btnC);
+    }
+
+    private void loadQuestion(){
+        if(triviaTypeNr==1)
+            question = new Image(q1[triviaNr-1]);
+        else if(triviaTypeNr==2)
+            question = new Image(q2[triviaNr-1]);
+        else
+            question = new Image(q3[triviaNr-1]);
+
+        question.setPosition(answersX-3,questionY);
+      //  question.addAction(sequence(alpha(0),alpha(1,fadeVelocity)));
+        stage.addActor(question);
+    }
+
+
+    private void loadAnswerA(){
+        if(triviaTypeNr==1)
+            loadAType1();
+        else if(triviaTypeNr==2)
+            loadAType2();
+        else
+            loadAType3();
+
+        answerA.setPosition(answersX,getPosition(0).y);
+     //   answerA.addAction(sequence(alpha(0),alpha(1,fadeVelocity)));
+        stage.addActor(answerA);
+    }
+
+    private void loadAType1(){
+        if(triviaNr==1){
+            answerA = new Image(Assets.instance.trivia.r1_1);
+        }else if(triviaNr==2)
+            answerA = new Image(Assets.instance.trivia.r1_4);
+        else
+            answerA = new Image(Assets.instance.trivia.r1_7);
+    }
+
+    private void loadAType2(){
+        if(triviaNr==1){
+            answerA = new Image(Assets.instance.trivia.r2_1);
+        }else if(triviaNr==2)
+            answerA = new Image(Assets.instance.trivia.r2_4);
+        else
+            answerA = new Image(Assets.instance.trivia.r2_7);
+    }
+
+    private void loadAType3(){
+        if(triviaNr==1){
+            answerA = new Image(Assets.instance.trivia.r3_1);
+        }else if(triviaNr==2)
+            answerA = new Image(Assets.instance.trivia.r3_4);
+    }
+
+    private void loadAnswerB(){
+        if(triviaTypeNr==1)
+            loadBType1();
+        else if(triviaTypeNr==2)
+            loadBType2();
+        else
+            loadBType3();
+
+        answerB.setPosition(answersX,getPosition(1).y);
+       // answerB.addAction(sequence(alpha(0),alpha(1,fadeVelocity)));
+        stage.addActor(answerB);
+    }
+
+    private void loadBType1(){
+        if(triviaNr==1){
+            answerB= new Image(Assets.instance.trivia.r1_2);
+        }else if(triviaNr==2)
+            answerB = new Image(Assets.instance.trivia.r1_5);
+        else
+            answerB = new Image(Assets.instance.trivia.r1_8);
+    }
+
+    private void loadBType2(){
+        if(triviaNr==1){
+            answerB = new Image(Assets.instance.trivia.r2_2);
+        }else if(triviaNr==2)
+            answerB = new Image(Assets.instance.trivia.r2_5);
+        else
+            answerB = new Image(Assets.instance.trivia.r2_8);
+    }
+
+    private void loadBType3(){
+        if(triviaNr==1){
+            answerB = new Image(Assets.instance.trivia.r3_2);
+        }else if(triviaNr==2)
+            answerB = new Image(Assets.instance.trivia.r3_5);
+    }
+
+    private void loadAnswerC(){
+        if(triviaTypeNr==1)
+            loadCType1();
+        else if(triviaTypeNr==2)
+            loadCType2();
+        else
+            loadCType3();
+
+        answerC.setPosition(answersX,getPosition(2).y);
+      //  answerC.addAction(sequence(alpha(0),alpha(1,fadeVelocity)));
+        stage.addActor(answerC);
+    }
+
+    private void loadCType1(){
+        if(triviaNr==1){
+            answerC= new Image(Assets.instance.trivia.r1_3);
+        }else if(triviaNr==2)
+            answerC = new Image(Assets.instance.trivia.r1_6);
+        else
+            answerC = new Image(Assets.instance.trivia.r1_9);
+    }
+
+    private void loadCType2(){
+        if(triviaNr==1){
+            answerC = new Image(Assets.instance.trivia.r2_3);
+        }else if(triviaNr==2)
+            answerC = new Image(Assets.instance.trivia.r2_6);
+        else
+            answerC = new Image(Assets.instance.trivia.r2_9);
+    }
+
+    private void loadCType3(){
+        if(triviaNr==1){
+            answerC = new Image(Assets.instance.trivia.r3_3);
+        }else if(triviaNr==2)
+            answerC = new Image(Assets.instance.trivia.r3_6);
+    }
+
+
+
 
 
     private void addBackgroundImage(){
@@ -233,9 +376,47 @@ public class TriviaScreen extends AbstractGameScreen {
         stage.addActor(mouth);
     }
 
+    private void addColumns(){
+        column1 = new Column(1);
+        column1.setPosition(370,-125);
+        column1.setTouchable(Touchable.enabled);
+        // to move around
+        column1.addListener(new ActorGestureListener() {
+
+            @Override
+            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+                //TODO we should check if the piece is in stage limits or the controller should do this?
+                column1.setPosition(column1.getX()+deltaX,column1.getY()+deltaY);
+                Gdx.app.log(TAG," column1 x "+column1.getX() +" y "+column1.getY());
+            }
+
+
+        });
+        stage.addActor(column1);
+
+        column2 = new Column(2);
+        column2.setPosition(-481,-171);
+        column2.setTouchable(Touchable.enabled);
+        // to move around
+        column2.addListener(new ActorGestureListener() {
+
+            @Override
+            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+                //TODO we should check if the piece is in stage limits or the controller should do this?
+                column2.setPosition(column2.getX()+deltaX,column2.getY()+deltaY);
+                Gdx.app.log(TAG," column2 x "+column2.getX() +" y "+column2.getY());
+            }
+
+
+        });
+        stage.addActor(column2);
+
+    }
+
     private void addCongrats(){
-        congrats = new Image(Assets.instance.toothGame.bacteriaTexture); // TODO change!!
+        congrats = new Image(Assets.instance.trivia.congratulation); // TODO change!!
         congrats.setSize(620,175);
+       // congrats.setSize(421,124);
         congrats.setOrigin(congrats.getWidth()/2, congrats.getHeight()/2);
         congrats.setPosition(-congrats.getWidth()/2,-congrats.getHeight()/2);
         congrats.setVisible(false);
@@ -252,7 +433,8 @@ public class TriviaScreen extends AbstractGameScreen {
             @Override
             public void touchDown(InputEvent event, float x, float y, int pointer, int button){
             //TODO we should check if the piece is in stage limits or the controller should do this?
-                AudioManager.instance.play(Assets.instance.sounds.good);
+                AudioManager.instance.play(goodSounds[MathUtils.random(2)]);
+
                 triviaNr+=1;
                 shouldRemoveFirst = true;
                 arm.doFete();
@@ -278,6 +460,8 @@ public class TriviaScreen extends AbstractGameScreen {
                 run(new Runnable() {
                     @Override
                     public void run() {
+                        removeQuestionAndAnswers();
+                        addABC();
                         addQuestionAndAnswers();
                     }
                 }),
@@ -313,7 +497,17 @@ public class TriviaScreen extends AbstractGameScreen {
 
     }
 
-    private void removeAllQuestions(){
+    private void removeQuestionAndAnswers(){
+        question.remove();
+        answerA.remove();
+        answerB.remove();
+        answerC.remove();
+//        btnA.clearListeners();
+//        btnB.clearListeners();
+//        btnC.clearListeners();
+        btnA.remove();
+        btnB.remove();
+        btnC.remove();
 
 
 

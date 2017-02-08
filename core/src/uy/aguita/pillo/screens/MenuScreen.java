@@ -122,6 +122,12 @@ public class MenuScreen extends AbstractGameScreen {
         game.setScreen(new ToothScreen(game), transition);
     }
     private void onMatchClicked () {
-        game.setScreen(new Match(game), transition);
+        game.setScreen(new MatchScreen(game), transition);
+    }
+
+    @Override
+    protected void onExitYes(){
+        dispose();
+        Gdx.app.exit();
     }
 }

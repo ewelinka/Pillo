@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -30,9 +31,11 @@ public class Assets implements Disposable, AssetErrorListener {
     public AssetButtons buttons;
     public AssetTooth toothGame;
     public AssetTrivia trivia;
+    public AssetMatch match;
 
     public AssetSounds sounds;
     public AssetMusic music;
+    public AssetGeneral general;
 
     // singleton: prevent instantiation from other classes
     private Assets() {
@@ -68,6 +71,8 @@ public class Assets implements Disposable, AssetErrorListener {
         buttons = new AssetButtons(atlas);
         toothGame = new AssetTooth(atlas);
         trivia = new AssetTrivia(atlas);
+        general = new AssetGeneral(atlas);
+        match = new AssetMatch(atlas);
 
         sounds = new AssetSounds(assetManager);
         music = new AssetMusic(assetManager);
@@ -134,6 +139,34 @@ public class Assets implements Disposable, AssetErrorListener {
         }
     }
 
+    public class AssetGeneral{
+        public final TextureAtlas.AtlasRegion exitGame;
+
+        public AssetGeneral(TextureAtlas atlas){
+            exitGame  = atlas.findRegion("cartel_salir_del_juego");
+
+        }
+    }
+
+    public class AssetMatch{
+        public final TextureAtlas.AtlasRegion question;
+        public final TextureAtlas.AtlasRegion option1, option2,option3;
+        public final TextureAtlas.AtlasRegion img1,img2,img3;
+        public final TextureAtlas.AtlasRegion back;
+
+        public AssetMatch(TextureAtlas atlas){
+            question = atlas.findRegion("preguntaMatch");
+            option1 =atlas.findRegion("todos");
+            option2 = atlas.findRegion("comida");
+            option3 = atlas.findRegion("a_veces");
+            img1 = atlas.findRegion("hilo");
+            img2 = atlas.findRegion("cepillo");
+            img3 = atlas.findRegion("caramelo");
+            back = atlas.findRegion("fondoMatch");
+
+        }
+    }
+
     public class AssetButtons{
         // Menu screen
         public final ImageButton.ImageButtonStyle trivia1;
@@ -148,11 +181,14 @@ public class Assets implements Disposable, AssetErrorListener {
         public final ImageButton.ImageButtonStyle answerBtn1Style,answerBtn2Style,answerBtn3Style;
         public final ImageButton.ImageButtonStyle back;
 
-        // Match screen
+        // MatchScreen screen
         public final TextButton.TextButtonStyle matchText; // match
         public final ImageButton.ImageButtonStyle match1;
         public final ImageButton.ImageButtonStyle match2;
         public final ImageButton.ImageButtonStyle match3;
+
+        // Exit
+        public final ImageButton.ImageButtonStyle exitYesStyle,exitNoStyle;
 
         public  AssetButtons(TextureAtlas atlas) {
             // ----------- Menu screen
@@ -199,7 +235,7 @@ public class Assets implements Disposable, AssetErrorListener {
             answerBtn3Style.down = new TextureRegionDrawable(atlas.findRegion("03b"));
             answerBtn3Style.over = new TextureRegionDrawable(atlas.findRegion("03b"));
 
-            // ----------- Match screen
+            // ----------- MatchScreen screen
             matchText = new TextButton.TextButtonStyle();
             matchText.font = fonts.trivia39;
             matchText.up = new TextureRegionDrawable(atlas.findRegion("02b"));
@@ -218,6 +254,18 @@ public class Assets implements Disposable, AssetErrorListener {
             match3.up = new TextureRegionDrawable(atlas.findRegion("btn-trivia1")); //Set image for not pressed button
             match3.down= new TextureRegionDrawable(atlas.findRegion("btn"));  //Set image for pressed
             match3.over= new TextureRegionDrawable(atlas.findRegion("btn"));
+
+            // -------------- exit confirmation
+            exitYesStyle = new ImageButton.ImageButtonStyle();
+            exitYesStyle.up = new TextureRegionDrawable(atlas.findRegion("salir_si01"));
+            exitYesStyle.down= new TextureRegionDrawable(atlas.findRegion("salir_si02"));  //Set image for pressed
+            exitYesStyle.over= new TextureRegionDrawable(atlas.findRegion("salir_si02"));
+
+            exitNoStyle = new ImageButton.ImageButtonStyle();
+            exitNoStyle.up = new TextureRegionDrawable(atlas.findRegion("salir_no01"));
+            exitNoStyle.down= new TextureRegionDrawable(atlas.findRegion("salir_no02"));  //Set image for pressed
+            exitNoStyle.over= new TextureRegionDrawable(atlas.findRegion("salir_no02"));
+
         }
 
     }

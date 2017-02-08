@@ -4,7 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import uy.aguita.pillo.game.Assets;
 import uy.aguita.pillo.game.BacteriaController;
 import uy.aguita.pillo.util.Constants;
@@ -27,7 +31,7 @@ public class ToothScreen extends AbstractGameScreen {
     public void show(){
         Gdx.app.log(TAG, "welcome to tooth screen");
         super.show();
-        addBackgroundImage();
+        addBackgroundImage(Assets.instance.toothGame.background);
         bacteriaController = new BacteriaController(stage);
         addBottomMenu();
         batch = new SpriteBatch();
@@ -41,7 +45,13 @@ public class ToothScreen extends AbstractGameScreen {
         }
         if(bacteriaController.tooth.isHurt() &&
                 bacteriaController.tooth.animationBad.isAnimationFinished(bacteriaController.tooth.getStateTime())){
-            resetBacteriasWorld();
+            if(bacteriaController.getLifeLost() == 2){
+                bacteriaController.setToothOk(true);
+                goToMenu();
+
+            }
+            else
+                resetBacteriasWorld();
             //TODO should we reset the score or we add points form 3 lifes?
         }
 
@@ -63,15 +73,6 @@ public class ToothScreen extends AbstractGameScreen {
 
     }
 
-    private void  addBackgroundImage(){
-
-
-        Image back = new Image(Assets.instance.toothGame.background);
-        back.setSize(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
-        back.setPosition(-Constants.VIEWPORT_WIDTH/2,-Constants.VIEWPORT_HEIGHT/2);
-
-        stage.addActor(back);
-    }
 
     private void addBottomMenu(){
         Image panel = new Image(Assets.instance.toothGame.scoreMenu);
@@ -116,8 +117,34 @@ public class ToothScreen extends AbstractGameScreen {
     private void resetBacteriasWorld(){
         Gdx.app.log(TAG,"reset tooth and bacterias");
         // we go back to normal life
-        bacteriaController.resetTooth();
+        bacteriaController.resetTooth(); // here we loose ona life
         bacteriaController.resetBacterias();
+    }
+
+    @Override
+    protected void addExitNo(){
+        //--- go back to game
+        no = new ImageButton(Assets.instance.buttons.exitNoStyle);
+        no.setTouchable(Touchable.enabled);
+        //-- to move around
+        no.addListener(new ActorGestureListener() {
+
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
+                exitGroup.remove();
+                bacteriaController.startBacterias();
+            }
+
+
+        });
+        exitGroup.addActor(no);
+    }
+
+    @Override
+    protected void goToMenu(){
+        bacteriaController.stopBacterias();
+        showExitConfirmation();
+        //
     }
 
 

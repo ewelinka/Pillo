@@ -1,16 +1,11 @@
 package uy.aguita.pillo.screens;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import uy.aguita.pillo.game.Assets;
 import uy.aguita.pillo.game.objects.MatchButton;
@@ -23,25 +18,29 @@ import static com.badlogic.gdx.scenes.scene2d.actions.Actions.scaleTo;
 /**
  * Created by ewe on 1/15/17.
  */
-public class Match extends AbstractGameScreen {
-    public static final String TAG = Match.class.getName();
-    private TextButton text1, text2, text3;
+public class MatchScreen extends AbstractGameScreen {
+    public static final String TAG = MatchScreen.class.getName();
+    private Image text1, text2, text3,question;
     private MatchButton img1,img2,img3;
     private Image congrats;
-    private int topY, distanceY, leftX, distanceX, btnW, btnH;
-    private int correctAnswers;
+    private int topY, distanceY, leftX, distanceX, optionW, optionH, btnW,btnH,adjustButtonY;
+    private int correctAnswers, adjustButtosX;
     private boolean weWon;
 
-    public Match(DirectedGame game) {
+    public MatchScreen(DirectedGame game) {
         super(game);
-        topY = 40;
-        distanceY = 140;
-        leftX = -362;
+        topY = 20;
+        distanceY = 130;
+        leftX = -382;
         distanceX = 590;
-        btnW = 500;
-        btnH = 100;
+        optionW = 500;
+        optionH = 90;
+        btnW = 204;
+        btnH =121;
         correctAnswers = 0;
         weWon = false;
+        adjustButtonY = 0;
+        adjustButtosX = -30;
     }
 
 
@@ -49,6 +48,7 @@ public class Match extends AbstractGameScreen {
     @Override
     public void show() {
         initStageAndCamera();
+        addBackgroundImage(Assets.instance.match.back);
         addBackButton();
         addMatches();
         addCongrats();
@@ -77,37 +77,45 @@ public class Match extends AbstractGameScreen {
     }
 
     private void addMatches(){
-        text1 = new TextButton("Opcion numero 1",Assets.instance.buttons.matchText);
+        question = new Image(Assets.instance.match.question);
+        question.setSize(816, 107);
+        question.setPosition(-question.getWidth()/2,134);
+
+
+        text1 = new Image(Assets.instance.match.option1);
         text1.setPosition(leftX,topY);
-        text1.setSize(btnW,btnH);
+        text1.setSize(optionW, optionH);
 
-        img1 = new MatchButton(Assets.instance.buttons.match1);
-        img1.setPosition(leftX+distanceX,topY);
-        img1.setSize(btnH,btnH);
+        img1 = new MatchButton(Assets.instance.match.img1);
+        img1.setPosition(leftX+distanceX,topY+adjustButtonY);
+        img1.setSize(btnW, btnH);
+        img1.setScale(0.75f);
         img1.setHome(img1.getX(),img1.getY());
-        addCorrectAction(img1,text1.getX(),text1.getY());
+        addCorrectAction(img1,text1.getX(),text1.getY(),adjustButtosX);
 
-        text2 = new TextButton("Opcion numero 2",Assets.instance.buttons.matchText);
+        text2 = new Image(Assets.instance.match.option2);
         text2.setPosition(leftX,topY-distanceY);
-        text2.setSize(btnW,btnH);
+        text2.setSize(optionW, optionH);
 
-        img2 = new MatchButton(Assets.instance.buttons.match2);
-        img2.setPosition(leftX+distanceX,topY-distanceY);
-        img2.setSize(btnH,btnH);
+        img2 = new MatchButton(Assets.instance.match.img2);
+        img2.setPosition(leftX+distanceX,topY-distanceY+adjustButtonY);
+        img2.setSize(btnW, btnH);
+        img2.setScale(0.75f);
         img2.setHome(img2.getX(),img2.getY());
-        addCorrectAction(img2,text2.getX(),text2.getY());
+        addCorrectAction(img2,text2.getX(),text2.getY(),adjustButtosX);
 
-        text3 = new TextButton("Opcion numero 3",Assets.instance.buttons.matchText);
+        text3 = new Image(Assets.instance.match.option3);
         text3.setPosition(leftX,topY-distanceY*2);
-        text3.setSize(btnW,btnH);
+        text3.setSize(optionW, optionH);
 
-        img3 = new MatchButton(Assets.instance.buttons.match3);
-        img3.setPosition(leftX+distanceX,topY-distanceY*2);
-        img3.setSize(btnH,btnH);
+        img3 = new MatchButton(Assets.instance.match.img3);
+        img3.setPosition(leftX+distanceX,topY-distanceY*2+adjustButtonY);
+        img3.setSize(btnW, btnH);
+        img3.setScale(0.75f);
         img3.setHome(img3.getX(),img3.getY());
-        addCorrectAction(img3,text3.getX(),text3.getY());
+        addCorrectAction(img3,text3.getX(),text3.getY(),adjustButtosX);
 
-
+        stage.addActor(question);
         stage.addActor(text1);
         stage.addActor(text2);
         stage.addActor(text3);
@@ -130,7 +138,7 @@ public class Match extends AbstractGameScreen {
 
 
 
-    private void addCorrectAction(final MatchButton btn, final float answerX, final float answerY){
+    private void addCorrectAction(final MatchButton btn, final float answerX, final float answerY, final int adjustX){
 
         btn.setTouchable(Touchable.enabled);
         // to move around
@@ -145,12 +153,12 @@ public class Match extends AbstractGameScreen {
             public void touchUp(InputEvent event, float x, float y, int pointer, int button){
                 //TODO we should check if the piece is in stage limits or the controller should do this?
 
-                Rectangle r1 = new Rectangle(btn.getX(),btn.getY(),btnH,btnH);
-                Rectangle r2 = new Rectangle(answerX,answerY,btnW,btnH);
+                Rectangle r1 = new Rectangle(btn.getX(),btn.getY(), optionH, optionH);
+                Rectangle r2 = new Rectangle(answerX,answerY, optionW, optionH);
                 if(r1.overlaps(r2)){
                     btn.setTouchable(Touchable.disabled);
                     AudioManager.instance.play(Assets.instance.sounds.good);
-                    btn.addAction(Actions.moveTo(leftX+btnW,answerY,1.0f));
+                    btn.addAction(Actions.moveTo(leftX+ optionW+adjustX,answerY,1.0f));
                     updateScore();
                 }else{
                     AudioManager.instance.play(Assets.instance.sounds.bad);

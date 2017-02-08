@@ -81,6 +81,10 @@ public class Tooth extends Actor {
         isOk = true;
     }
 
+    public void setOk(boolean isOkNow){
+        isOk = isOkNow;
+    }
+
     public boolean isHurt(){
         return !isOk;
     }

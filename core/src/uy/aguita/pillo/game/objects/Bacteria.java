@@ -1,5 +1,6 @@
 package uy.aguita.pillo.game.objects;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -26,6 +27,7 @@ public class Bacteria extends Actor {
     public float velocity;
     private TextureRegion reg;
     private BacteriaController bacteriaController;
+    private boolean lookingLeft;
 
 
     public Bacteria(int identifier, BacteriaController bacteriaController){
@@ -63,6 +65,11 @@ public class Bacteria extends Actor {
         }
         stateTime = 0;
 
+        if(getX()<0){
+            lookingLeft =true;
+        }else
+            lookingLeft=false;
+
         //reg = Assets.instance.toothGame.bacteriaTexture;
         addAction(Actions.moveTo(0-getWidth()/2,0-getHeight()/2,10.0f/velocity));
 
@@ -84,7 +91,7 @@ public class Bacteria extends Actor {
                 this.getScaleX(), this.getScaleY(),
                 this.getRotation(),
                 reg.getRegionX(), reg.getRegionY(),
-                reg.getRegionWidth(), reg.getRegionHeight(), false,false);
+                reg.getRegionWidth(), reg.getRegionHeight(), lookingLeft,false);
     }
 
 
@@ -109,6 +116,11 @@ public class Bacteria extends Actor {
     public void stopBacteria(){
         this.setTouchable(Touchable.disabled);
         clearActions();
+    }
+
+    public void startBacteria(){
+        this.setTouchable(Touchable.enabled);
+        addAction(Actions.moveTo(0-getWidth()/2,0-getHeight()/2,10.0f/velocity));
     }
 
     public void resetBacteria(){

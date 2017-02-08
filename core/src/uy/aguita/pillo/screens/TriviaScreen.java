@@ -72,7 +72,7 @@ public class TriviaScreen extends AbstractGameScreen {
     @Override
     public void show() {
         initStageAndCamera();
-        addBackgroundImage();
+        addBackgroundImage(Assets.instance.trivia.background);
         addBackButton();
         addColumns();
 
@@ -167,10 +167,29 @@ public class TriviaScreen extends AbstractGameScreen {
     }
 
     private void loadCorrectAndWrong(){
+
+        int nr = 3*(triviaTypeNr-1) + triviaNr; //1 to 8
+        Gdx.app.log(TAG," load index "+nr);
+        if(nr == 3 || nr == 4 || nr == 7)
+            loadCorrectA();
+        else
+            loadCorrectB();
+
+    }
+
+    private void loadCorrectA(){
+        addCorrectAction(btnA);
+        addWrongAction(btnB);
+        addWrongAction(btnC);
+    }
+
+    private void loadCorrectB(){
         addCorrectAction(btnB);
         addWrongAction(btnA);
         addWrongAction(btnC);
     }
+
+
 
     private void loadQuestion(){
         if(triviaTypeNr==1)
@@ -304,31 +323,25 @@ public class TriviaScreen extends AbstractGameScreen {
 
 
 
-    private void addBackgroundImage(){
-        Image back = new Image(Assets.instance.trivia.background);
-        back.setSize(Constants.VIEWPORT_WIDTH,Constants.VIEWPORT_HEIGHT);
-        back.setPosition(-Constants.VIEWPORT_WIDTH/2,-Constants.VIEWPORT_HEIGHT/2);
 
-        stage.addActor(back);
-    }
 
     private void addPillo(){
         final Image pillo = new Image(Assets.instance.trivia.pillo);
         pillo.setSize(168,269);
         pillo.setPosition(343,-173);
-        pillo.setTouchable(Touchable.enabled);
-        // to move around
-        pillo.addListener(new ActorGestureListener() {
-
-            @Override
-            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
-                //TODO we should check if the piece is in stage limits or the controller should do this?
-                pillo.setPosition(pillo.getX()+deltaX,pillo.getY()+deltaY);
-                Gdx.app.log(TAG," pillo x "+pillo.getX() +" y "+pillo.getY());
-            }
-
-
-        });
+//        pillo.setTouchable(Touchable.enabled);
+//        // to move around
+//        pillo.addListener(new ActorGestureListener() {
+//
+//            @Override
+//            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+//                //TODO we should check if the piece is in stage limits or the controller should do this?
+//                pillo.setPosition(pillo.getX()+deltaX,pillo.getY()+deltaY);
+//                Gdx.app.log(TAG," pillo x "+pillo.getX() +" y "+pillo.getY());
+//            }
+//
+//
+//        });
 
         stage.addActor(pillo);
     }
@@ -338,19 +351,19 @@ public class TriviaScreen extends AbstractGameScreen {
         arm.setPosition(244,-162);
         arm.setSize(202,273);
 
-        arm.setTouchable(Touchable.enabled);
-        // to move around
-        arm.addListener(new ActorGestureListener() {
-
-            @Override
-            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
-                //TODO we should check if the piece is in stage limits or the controller should do this?
-                arm.setPosition(arm.getX()+deltaX,arm.getY()+deltaY);
-                Gdx.app.log(TAG," arm x "+arm.getX() +" y "+arm.getY());
-            }
-
-
-        });
+//        arm.setTouchable(Touchable.enabled);
+//        // to move around
+//        arm.addListener(new ActorGestureListener() {
+//
+//            @Override
+//            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+//                //TODO we should check if the piece is in stage limits or the controller should do this?
+//                arm.setPosition(arm.getX()+deltaX,arm.getY()+deltaY);
+//                Gdx.app.log(TAG," arm x "+arm.getX() +" y "+arm.getY());
+//            }
+//
+//
+//        });
         stage.addActor(arm);
     }
 
@@ -360,55 +373,55 @@ public class TriviaScreen extends AbstractGameScreen {
         mouth.setPosition(408,-32);
         mouth.setSize(44,47);
 
-        mouth.setTouchable(Touchable.enabled);
-        // to move around
-        mouth.addListener(new ActorGestureListener() {
-
-            @Override
-            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
-                //TODO we should check if the piece is in stage limits or the controller should do this?
-                mouth.setPosition(mouth.getX()+deltaX,mouth.getY()+deltaY);
-                Gdx.app.log(TAG," arm x "+mouth.getX() +" y "+mouth.getY());
-            }
-
-
-        });
+//        mouth.setTouchable(Touchable.enabled);
+//        // to move around
+//        mouth.addListener(new ActorGestureListener() {
+//
+//            @Override
+//            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+//                //TODO we should check if the piece is in stage limits or the controller should do this?
+//                mouth.setPosition(mouth.getX()+deltaX,mouth.getY()+deltaY);
+//                Gdx.app.log(TAG," arm x "+mouth.getX() +" y "+mouth.getY());
+//            }
+//
+//
+//        });
         stage.addActor(mouth);
     }
 
     private void addColumns(){
         column1 = new Column(1);
         column1.setPosition(370,-125);
-        column1.setTouchable(Touchable.enabled);
-        // to move around
-        column1.addListener(new ActorGestureListener() {
-
-            @Override
-            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
-                //TODO we should check if the piece is in stage limits or the controller should do this?
-                column1.setPosition(column1.getX()+deltaX,column1.getY()+deltaY);
-                Gdx.app.log(TAG," column1 x "+column1.getX() +" y "+column1.getY());
-            }
-
-
-        });
+//        column1.setTouchable(Touchable.enabled);
+//        // to move around
+//        column1.addListener(new ActorGestureListener() {
+//
+//            @Override
+//            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+//                //TODO we should check if the piece is in stage limits or the controller should do this?
+//                column1.setPosition(column1.getX()+deltaX,column1.getY()+deltaY);
+//                Gdx.app.log(TAG," column1 x "+column1.getX() +" y "+column1.getY());
+//            }
+//
+//
+//        });
         stage.addActor(column1);
 
         column2 = new Column(2);
         column2.setPosition(-481,-171);
-        column2.setTouchable(Touchable.enabled);
-        // to move around
-        column2.addListener(new ActorGestureListener() {
-
-            @Override
-            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
-                //TODO we should check if the piece is in stage limits or the controller should do this?
-                column2.setPosition(column2.getX()+deltaX,column2.getY()+deltaY);
-                Gdx.app.log(TAG," column2 x "+column2.getX() +" y "+column2.getY());
-            }
-
-
-        });
+//        column2.setTouchable(Touchable.enabled);
+//        // to move around
+//        column2.addListener(new ActorGestureListener() {
+//
+//            @Override
+//            public void pan(InputEvent event, float x, float y, float deltaX, float deltaY) {
+//                //TODO we should check if the piece is in stage limits or the controller should do this?
+//                column2.setPosition(column2.getX()+deltaX,column2.getY()+deltaY);
+//                Gdx.app.log(TAG," column2 x "+column2.getX() +" y "+column2.getY());
+//            }
+//
+//
+//        });
         stage.addActor(column2);
 
     }
@@ -460,9 +473,14 @@ public class TriviaScreen extends AbstractGameScreen {
                 run(new Runnable() {
                     @Override
                     public void run() {
-                        removeQuestionAndAnswers();
-                        addABC();
-                        addQuestionAndAnswers();
+                        if(!triviaOver() ) {
+                            removeQuestionAndAnswers();
+                            addABC();
+                            addQuestionAndAnswers();
+                        }
+                        else{
+                            goToMenu();
+                        }
                     }
                 }),
                 delay(0.6f),
@@ -495,6 +513,10 @@ public class TriviaScreen extends AbstractGameScreen {
 
         });
 
+    }
+
+    private boolean triviaOver(){
+        return ((triviaNr==3 && triviaTypeNr==3) || triviaNr > 3);
     }
 
     private void removeQuestionAndAnswers(){

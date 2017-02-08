@@ -38,8 +38,9 @@ public class BacteriaController {
         actualScore = 0;
         lifeLost = 0;
         bacteriaMargin = 20;
-        createBacterias();
         addTooth();
+        createBacterias();
+
     }
 
     public void createBacterias(){
@@ -81,6 +82,12 @@ public class BacteriaController {
         }
     }
 
+    public void startBacterias(){
+        for (int i =0;i<bacterias.size();i++) {
+            bacterias.get(i).startBacteria();
+        }
+    }
+
     public int getActualScore(){ return actualScore;}
 
 
@@ -107,12 +114,19 @@ public class BacteriaController {
         AudioManager.instance.play(Assets.instance.sounds.bad);
         stopBacterias();
         tooth.setHurt();
-        lifeLost+=1;
 
+
+
+    }
+
+    public void setToothOk(boolean isok)
+    {
+        tooth.setOk(isok);
     }
 
     public void resetTooth(){
         tooth.setOk();
+        lifeLost+=1;
     }
 
     public int getLifeLost(){ return  lifeLost;}
